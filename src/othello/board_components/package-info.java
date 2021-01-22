@@ -1,0 +1,1 @@
+package othello.board_components;
