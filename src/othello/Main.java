@@ -7,6 +7,7 @@ public class Main {
 		ConsoleBoard tempBoard = new ConsoleBoard();
 		
 		tempBoard.printBoard();
+		System.out.println("Update in github?");
 	}
 
 }
