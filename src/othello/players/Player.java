@@ -8,8 +8,17 @@ public class Player {
 	
 	public Player(boolean black)
 	{
-		setColor(black);
-		this.opponent = new Player(!this.black);
+		if (black)
+		{
+			setColor(black);
+			this.opponent = new Player(!this.black);
+			this.opponent.opponent = this;
+		}
+		else
+		{
+			setColor(black);
+		}
+
 	}
 	
 	public void placeDisk()

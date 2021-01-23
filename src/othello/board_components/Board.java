@@ -115,6 +115,7 @@ public class Board {
 	
 	private void findPlayableSpaces(Player currentPlayer)
 	{
+		System.out.println("Looking for playable spaces");
 		// ITERATE OVER BOARD to RECONSTRUCT ROWS
 		for (int y = 0; y < this.height; y++)
 		{

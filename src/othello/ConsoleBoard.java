@@ -22,19 +22,19 @@ public class ConsoleBoard {
 	
 	public ConsoleBoard()
 	{
-		// INITIALIZE BOARD
-		for (int y = 0; y < 8; y++)
-		{
-			for (int x = 0; x < 8; x++)
-			{
-				this.consoleBoard[y][x] = "[ ]";
-			}
-		}
-		// INITIAL DISKS
-		this.consoleBoard[3][3] = "[O]";
-		this.consoleBoard[3][4] = "[X]";
-		this.consoleBoard[4][4] = "[O]";
-		this.consoleBoard[4][3] = "[X]";
+//		// INITIALIZE BOARD
+//		for (int y = 0; y < 8; y++)
+//		{
+//			for (int x = 0; x < 8; x++)
+//			{
+//				this.consoleBoard[y][x] = "[ ]";
+//			}
+//		}
+//		// INITIAL DISKS
+//		this.consoleBoard[3][3] = "[O]";
+//		this.consoleBoard[3][4] = "[X]";
+//		this.consoleBoard[4][4] = "[O]";
+//		this.consoleBoard[4][3] = "[X]";
 	}
 	
 	public void getBoardData(Board currentBoard)

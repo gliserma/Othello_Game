@@ -1,5 +1,8 @@
 package othello.game_states;
 
+import java.util.Scanner;
+
+import othello.ConsoleBoard;
 import othello.board_components.Board;
 import othello.players.Player;
 import othello.players.Score;
@@ -17,6 +20,7 @@ public class TurnManager {
 	private Player currentPlayer;
 	private Score score;
 	private Board board;
+	private ConsoleBoard visualBoard = new ConsoleBoard();
 	
 	/**
 	 * Starts the play state of the game.
@@ -55,24 +59,52 @@ public class TurnManager {
 	
 	public void takeTurn()
 	{
+		incrementTurn();
+		
+		// BOARD IS VISUALIZED
+		this.visualBoard.getBoardData(this.board);
+		this.visualBoard.printBoard();
 		if (this.board.newTurn(this.currentPlayer) == 0) // IF NO PLAYABLE SPACES: 
 		{
+			incrementSkippedTurns();
+		}
+		else
+		{
+			// RESET SKIPPED TURNS to ZERO
+			resetSkippedTurns();
 			
-			// incrementSkippedTurns();
-			// if (isGameDone) {} FIND THE WINNER, GO TO VICTORY SCREEN
-			// else {setNextPlayer();}
+
+
+			// PLAYER INPUT
+			while (!enterSpace()) {}
+			updateScore();
+			this.score.updateScore();
+			this.score.displayScores();
 		}
 		// FIND PLAYABLE BOARD SPACES
 
-			// ELSE: resetSkippedTurns();
-		
-		// PLAYER CHOOSES SPACE
-		// BOARD IS UPDATED
-		// SCORE IS UPDATED
-		
-		this.score.updateScore();
 		setNextPlayer();
 		
+	}
+	
+	private boolean enterSpace()
+	{
+		Scanner input = new Scanner(System.in);
+		System.out.println("Player " + this.currentPlayer.getUsername() + "'s Turn");
+		
+		// PLAYER CHOOSES SPACE
+		System.out.print("Enter Y: ");
+		int y = input.nextInt();
+		System.out.print("Enter X: ");
+		int x = input.nextInt();
+		input.close();	
+		try {
+			this.board.setNewDisk(y, x, this.currentPlayer, this.currentTurn);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
 	}
 	
 	// OPTIONAL METHOD: TODO
@@ -84,7 +116,7 @@ public class TurnManager {
 	private void incrementSkippedTurns() {this.numTurnsSkipped++;}
 	private void resetSkippedTurns() {this.numTurnsSkipped = 0;}
 	
-	private boolean isGameDone() 
+	public boolean isGameDone() 
 	{
 		if (this.numTurnsSkipped == 2) {return true;}
 		return false;
