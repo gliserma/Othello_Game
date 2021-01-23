@@ -2,7 +2,7 @@ package othello.board_components;
 
 import java.util.ArrayList;
 
-import othello.Player;
+import othello.players.Player;
 
 /**
  * Building block of the board, which can house a disk.
@@ -19,6 +19,12 @@ public class Space
 	private boolean playable = false;
 	private Disk disk;
 	
+	/**
+	 * Creates an empty space object, to be
+	 * populated with neighbors after the board
+	 * creates all of the space objects.
+	 * 
+	 */
 	public Space() {}
 	
 	/**
@@ -26,8 +32,8 @@ public class Space
 	 */
 	public void reset()
 	{
-		rowsEndingHere = new ArrayList<>();
-		playable = false;
+		this.rowsEndingHere = new ArrayList<>();
+		this.playable = false;
 		for (int i = 0; i < this.rowsStartingHere.size(); i++)
 		{
 			this.rowsStartingHere.get(i).reset();
@@ -39,18 +45,14 @@ public class Space
 	 * starting in this space to discover if any of them
 	 * lead to a playable space.
 	 * 
-	 * TODO: If we add a player parameter, we will only need to
-	 * reconstruct rows starting on spaces with disks for 
-	 * that player, thereby reducing the overall processing for the
-	 * program each turn.
 	 */
-	public void reconstructRowsStartingHere()
+	public void reconstructRowsStartingHere(Player current)
 	{
-		if (!isEmpty())
+		if (!isEmpty() && this.disk.currentPlayer.isBlack() == current.isBlack())
 		{
 			for (int i = 0; i < this.rowsStartingHere.size(); i++)
 			{
-				this.rowsStartingHere.get(i).reconstruct();
+				this.rowsStartingHere.get(i).reconstruct(current.isBlack());
 			}
 		}
 	}
@@ -108,9 +110,8 @@ public class Space
 	
 	public void setDisk(Player player, int turn) throws Exception
 	{
-		if (playable && this.disk == null)
+		if (playable && isEmpty())
 		{
-			player.incrementScore();
 			this.disk = new Disk(player, turn);
 			flipDisks();
 		}
@@ -118,9 +119,18 @@ public class Space
 	}
 	
 	// GETTERS
+	public boolean isPlayable() {return this.playable;}
+	
 	public boolean isEmpty() 
 	{
 		if (this.disk == null) {return true;}
 		else {return false;}
 	}
+	
+	public Space getNeighboringSpace(Direction direction) throws Exception
+	{
+		return this.neighbors.getNeighboringSpace(direction);
+	}
+	
+	public Disk getDisk() {return this.disk;}
 }

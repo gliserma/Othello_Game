@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * The eight possible directions to move from
  * one space to all possible neighboring spaces.
  * 
- * 
  * @author nicholasgliserman
  *
  */

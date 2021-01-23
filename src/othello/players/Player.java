@@ -1,10 +1,10 @@
-package othello;
+package othello.players;
 
 public class Player {
 	String username;
 	Player opponent;
 	boolean black;
-	int currentScore = 2;
+	int currentScore = 0;
 	
 	public Player(boolean black)
 	{

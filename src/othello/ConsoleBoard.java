@@ -1,6 +1,7 @@
 package othello;
 
 import othello.board_components.Board;
+import othello.board_components.Space;
 
 /**
  * Allows us to play Othello on the console, i.e.
@@ -34,6 +35,35 @@ public class ConsoleBoard {
 		this.consoleBoard[3][4] = "[X]";
 		this.consoleBoard[4][4] = "[O]";
 		this.consoleBoard[4][3] = "[X]";
+	}
+	
+	public void getBoardData(Board currentBoard)
+	{
+		for (int height = 0; height < this.consoleBoard.length; height++)
+		{
+			for (int width = 0; width < this.consoleBoard[height].length; width++)
+			{
+				Space currentSpace = currentBoard.getSpace(height, width);
+				
+				if (currentSpace.isPlayable())
+				{
+					this.consoleBoard[height][width] = "[P]";
+				}
+				else if (currentSpace.isEmpty())
+				{
+					this.consoleBoard[height][width] = "[ ]";
+				}
+				else if(currentSpace.getDisk().isBlack())
+				{
+					this.consoleBoard[height][width] = "[X]";
+				}
+				else
+				{
+					this.consoleBoard[height][width] = "[O]";
+				}
+			}
+		}
+		
 	}
 	
 	public void printBoard()

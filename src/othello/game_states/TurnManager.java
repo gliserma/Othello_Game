@@ -1,6 +1,8 @@
-package othello;
+package othello.game_states;
 
 import othello.board_components.Board;
+import othello.players.Player;
+import othello.players.Score;
 
 /**
  * Controls the flow of the game while
@@ -16,16 +18,22 @@ public class TurnManager {
 	private Score score;
 	private Board board;
 	
-	public TurnManager()
+	/**
+	 * Starts the play state of the game.
+	 * 
+	 * @param usernameBlack
+	 * @param usernameWhite
+	 */
+	public TurnManager(String usernameBlack, String usernameWhite) 
 	{
-		
+		initializeGame(usernameBlack, usernameWhite);
 	}
 	
 	public void initializeGame(String usernameBlack, String usernameWhite)
 	{
 		initializePlayers(usernameBlack, usernameWhite);
 		initializeScore();
-		initializeBoard();
+		initializeBoard(currentPlayer);
 	}
 	
 	// GAME INITIALIZATION METHODS
@@ -43,15 +51,19 @@ public class TurnManager {
 		this.score = new Score(this.currentPlayer, this.currentPlayer.getOpponent());
 	}
 	
-	private void initializeBoard() {this.board = new Board();}
+	private void initializeBoard(Player black) {this.board = new Board(black);}
 	
 	public void takeTurn()
 	{
+		if (this.board.newTurn(this.currentPlayer) == 0) // IF NO PLAYABLE SPACES: 
+		{
+			
+			// incrementSkippedTurns();
+			// if (isGameDone) {} FIND THE WINNER, GO TO VICTORY SCREEN
+			// else {setNextPlayer();}
+		}
 		// FIND PLAYABLE BOARD SPACES
-			// IF NO PLAYABLE SPACES: 
-				// incrementSkippedTurns();
-				// if (isGameDone) {} FIND THE WINNER, GO TO VICTORY SCREEN
-				// else {setNextPlayer();}
+
 			// ELSE: resetSkippedTurns();
 		
 		// PLAYER CHOOSES SPACE

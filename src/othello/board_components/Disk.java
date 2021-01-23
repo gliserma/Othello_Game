@@ -1,6 +1,6 @@
 package othello.board_components;
 
-import othello.Player;
+import othello.players.Player;
 
 /**
  * Piece placed on the Othello board, representing a player.
@@ -25,6 +25,7 @@ public class Disk {
 	{
 		setPlayer(player);
 		setTurnPlaced(turn);
+		this.currentPlayer.incrementScore();
 	}
 	
 	/**

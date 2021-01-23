@@ -10,7 +10,6 @@ package othello.board_components;
  */
 public class Neighbor 
 {
-	private boolean onBoard;
 	private Space destination;
 	private Direction direction;
 	

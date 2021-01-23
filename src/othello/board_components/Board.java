@@ -2,7 +2,7 @@ package othello.board_components;
 
 import java.util.ArrayList;
 
-import othello.Player;
+import othello.players.Player;
 
 /**
  * The 8x8 grid of spaces where the game of 
@@ -18,15 +18,30 @@ public class Board {
 	private int width = 8;
 	public Space[][] boardspaces = new Space[this.height][this.width];
 
-	public Board()
+	public Board(Player black)
 	{
-		initializeBoard();
+		initializeBoard(black);
 	}
 	
-	private void initializeBoard()
+	private void initializeBoard(Player black)
 	{
 		initializeSpaces();
-		// TODO: Add four disks to center spaces
+		// ADD CENTER DISKS to BOARD
+		try {
+			// SET BLACK PIECES
+			this.boardspaces[3][4].setPlayableTrue();
+			this.boardspaces[3][4].setDisk(black, 0);		
+			this.boardspaces[4][3].setPlayableTrue();
+			this.boardspaces[4][3].setDisk(black, 0);
+			
+			// SET WHITE PIECES
+			this.boardspaces[3][3].setPlayableTrue();
+			this.boardspaces[3][3].setDisk(black.getOpponent(), 0);		
+			this.boardspaces[4][4].setPlayableTrue();
+			this.boardspaces[4][4].setDisk(black.getOpponent(), 0);
+			
+		} 
+		catch (Exception e) {e.printStackTrace();}
 	}
 	
 	private void initializeSpaces()
@@ -69,9 +84,7 @@ public class Board {
 					neighbors.addNeighboringSpace(temp);
 				}
 			}
-			
 		}
-		
 		return neighbors;
 	}
 	
@@ -79,35 +92,64 @@ public class Board {
 	 * 
 	 * @param currentPlayer
 	 */
-	public void newTurn(Player currentPlayer)
+	public int newTurn(Player currentPlayer)
 	{
 		resetPlayableSpaces();
 		findPlayableSpaces(currentPlayer);
+		return this.numCurrentPlayableSpaces;
 	}
 	
 	private void resetPlayableSpaces()
 	{
-		// ITERATE OVER BOARD & REST EACH SPACE 
+		// RESET NUMBER OF PLAYABLE SPACES to ZERO
+		this.numCurrentPlayableSpaces = 0;
+		// ITERATE OVER BOARD & RESET EACH SPACE 
+		for (int y = 0; y < this.height; y++)
+		{
+			for (int x = 0; x < this.width; x++)
+			{
+				boardspaces[y][x].reset();
+			}
+		}
 	}
 	
 	private void findPlayableSpaces(Player currentPlayer)
 	{
 		// ITERATE OVER BOARD to RECONSTRUCT ROWS
+		for (int y = 0; y < this.height; y++)
+		{
+			for (int x = 0; x < this.width; x++)
+			{
+				boardspaces[y][x].reconstructRowsStartingHere(currentPlayer);
+			}
+		}
 
 		// ITERATE OVER BOARD to FIND PLAYABLE SPACES
+		for (int y = 0; y < this.height; y++)
+		{
+			for (int x = 0; x < this.width; x++)
+			{
+				// IS THIS SPACE PLAYABLE?
+				if (boardspaces[y][x].isPlayable()) {this.numCurrentPlayableSpaces++;}
+			}
+		}
 	}
 	
+	// SETTERS
 	/**
 	 * 
 	 * @param x
 	 * @param y
 	 * @throws Exception 
 	 */
-	public void setNewDisk(int x, int y, Player currentPlayer, int turn) throws Exception
+	public void setNewDisk(int y, int x, Player currentPlayer, int turn) throws Exception
 	{
 		Space placeDiskHere = this.boardspaces[y][x];
 		placeDiskHere.setDisk(currentPlayer, turn);
 	}
 	
+
+	// GETTERS
+	public Space getSpace(int y, int x) {return this.boardspaces[y][x];}
 	
 }

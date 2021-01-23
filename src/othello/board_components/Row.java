@@ -2,7 +2,7 @@ package othello.board_components;
 
 import java.util.ArrayList;
 
-import othello.Player;
+import othello.players.Player;
 
 /**
  * List of adjacent spaces in a single direction.
@@ -35,53 +35,59 @@ import othello.Player;
 
 public class Row {
 	Space start;
-	Player startDiskPlayer;
 	Direction direction;
 	ArrayList<Space> between = new ArrayList<>();
 	Space end;
-	boolean valid = false;
-	
-	/*
-	 * TODO: boolean permanentlyInvalid
-	 * 
-	 * Having such a field to stop the row from resetting
-	 * and reconstructing itself would make it difficult
-	 * to ever go back a turn.
-	 */
-	
+
 	public Row(Space start, Direction direction)
 	{
-		
+		setStart(start);
+		setDirection(direction);
 	}
 	
-	public void reconstruct()
+	public void reconstruct(boolean startingDiskBlack)
 	{
-		// IS THERE A DISK ON THIS SPACE?
-			// IF NO: A row should not start here. STOP
-			// IF YES: CONTINUE
-			// GET FIRST NEIGHBOR
-			// IS THERE A SPACE HERE?
-				// NO: This row is not playable. STOP.
-				// YES: Is this space empty?
-					// IF EMPTY, it is not playable. STOP
-					// IF NOT EMPTY:
-						// Does the disk belong to the same player as starting disk?
-							// If yes, STOP
-							// If no, FIND NEXT NEIGHBOR
-				// WHILE WE REMAIN ON BOARD
-					// GET NEIGHBOR
-					// IS THERE A SPACE HERE?
-						// NO: This row is not playable. STOP
-						// YES: We can continue
-					// IS THIS SPACE EMPTY?
-						// YES: This is a playable space
-							// Assign this space to this.end attribute
-							// Attach this row to the this.end space vis-a-vis
-							// this.end.addRowEndingHere(this);
-							// STOP
-						// NO: Does the disk here belong to the same player as starting disk?
-							// YES: This row is not playable. STOP
-							// NO: Repeat Loop, i.e. GET NEIGHBOR
+		try 
+		{
+			// GET FIRST NEIGHBORING SPACE (IF EXISTS)
+			Space firstNeighbor = this.start.getNeighboringSpace(this.direction);
+			// CONTINUE IF FIRST NEIGHBOR HAS DISK
+			if (!firstNeighbor.isEmpty())
+			{
+				// CONTINUE IF FIRST NEIGHBOR's DISK IS DIFFERENT COLOR
+				if (firstNeighbor.getDisk().isBlack() != startingDiskBlack)
+				{
+					// ADD TO BETWEEN LIST
+					this.between.add(firstNeighbor);
+					Space nextNeighbor = firstNeighbor;
+					boolean next = true;
+					while (next)
+					{
+						//FIND NEXT NEIGHBOR WHILE WE REMAIN ON BOARD
+						nextNeighbor = nextNeighbor.getNeighboringSpace(this.direction);
+						// IF SPACE IS EMPTY, IT IS PLAYABLE
+						if (nextNeighbor.isEmpty())
+						{
+							setEnd(nextNeighbor);
+							this.end.addRowEndingHere(this);
+							this.end.setPlayableTrue();
+							next = false;
+						}
+						// IF DISK BELONGS TO SAME PLAYER AS STARTING DISK, STOP
+						else if (nextNeighbor.getDisk().isBlack() == startingDiskBlack) 
+						{
+							next = false;
+						}
+						// DISK BELONGS TO OPPOSITE PLAYER AS STARTING DISK, CONTINUE
+						else 
+						{
+							this.between.add(nextNeighbor);
+						}
+					}
+				}
+			}
+		} 
+		catch (Exception e) {} // CASES WHERE WE HIT THE EDGE OF THE BOARD
 	}
 	
 	public void flipDisks()
@@ -93,10 +99,24 @@ public class Row {
 		
 	}
 	
+	/**
+	 * Restores the row to its original settings.
+	 * 
+	 * The row keeps its original starting space and
+	 * direction. 
+	 * 
+	 * TODO: FINISH WRITING DESCRIPTION
+	 */
 	public void reset()
 	{
-		
+		this.between = new ArrayList<>();
+		this.end = null;
 	}
 	
-
+	// SETTERS
+	private void setStart(Space start) {this.start = start;}
+	private void setEnd(Space end) {this.end = end;}
+	private void setDirection(Direction direction) {this.direction = direction;}
+	
+	// GETTERS
 }

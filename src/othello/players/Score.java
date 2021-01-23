@@ -1,4 +1,4 @@
-package othello;
+package othello.players;
 
 public class Score {
 	private Player black;

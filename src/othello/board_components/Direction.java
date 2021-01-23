@@ -28,6 +28,13 @@ public class Direction {
 	 */
 	public Direction(int x, int y) throws Exception
 	{
+		// CHECK VALUES BETWEEN -1 and 1
+		if (x < -1 || x > 1 || y < -1 || y > 1)
+		{
+			throw new Exception("Invalid direction (x and y must be between -1 and 1)");
+		}
+
+		// CHECK VALUE is NOT (0, 0)
 		if (x != 0 && y != 0)
 		{
 			setX(x);

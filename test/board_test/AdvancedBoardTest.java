@@ -1,4 +1,4 @@
-package othello.board_components;
+package board_test;
 
 import static org.junit.Assert.*;
 
