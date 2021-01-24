@@ -40,6 +40,8 @@ public class Board {
 			this.boardspaces[4][4].setPlayableTrue();
 			this.boardspaces[4][4].setDisk(black.getOpponent(), 0);
 			
+			resetPlayableSpaces();
+			
 		} 
 		catch (Exception e) {e.printStackTrace();}
 	}
@@ -52,6 +54,7 @@ public class Board {
 			for (int x = 0; x < this.width; x++)
 			{
 				boardspaces[y][x] = new Space();
+				boardspaces[y][x].setName("Space @ (" + x + ", " + y + ")");
 			}
 		}
 		
@@ -115,7 +118,6 @@ public class Board {
 	
 	private void findPlayableSpaces(Player currentPlayer)
 	{
-		System.out.println("Looking for playable spaces");
 		// ITERATE OVER BOARD to RECONSTRUCT ROWS
 		for (int y = 0; y < this.height; y++)
 		{

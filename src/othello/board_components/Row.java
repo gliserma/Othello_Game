@@ -65,6 +65,7 @@ public class Row {
 					{
 						//FIND NEXT NEIGHBOR WHILE WE REMAIN ON BOARD
 						nextNeighbor = nextNeighbor.getNeighboringSpace(this.direction);
+						
 						// IF SPACE IS EMPTY, IT IS PLAYABLE
 						if (nextNeighbor.isEmpty())
 						{

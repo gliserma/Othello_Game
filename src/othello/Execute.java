@@ -7,9 +7,7 @@ public class Execute {
 
 	public static void main(String[] args) {
 		{
-			System.out.println("Test");
 			TurnManager game = new TurnManager("PlayerOne", "PlayerTwo");
-			
 			while (!game.isGameDone())
 			{
 				System.out.println("Take turn");

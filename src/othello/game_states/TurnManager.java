@@ -21,6 +21,7 @@ public class TurnManager {
 	private Score score;
 	private Board board;
 	private ConsoleBoard visualBoard = new ConsoleBoard();
+	private Scanner input = new Scanner(System.in);
 	
 	/**
 	 * Starts the play state of the game.
@@ -38,6 +39,7 @@ public class TurnManager {
 		initializePlayers(usernameBlack, usernameWhite);
 		initializeScore();
 		initializeBoard(currentPlayer);
+		this.visualBoard.getBoardData(this.board);
 	}
 	
 	// GAME INITIALIZATION METHODS
@@ -62,18 +64,19 @@ public class TurnManager {
 		incrementTurn();
 		
 		// BOARD IS VISUALIZED
-		this.visualBoard.getBoardData(this.board);
-		this.visualBoard.printBoard();
+		
 		if (this.board.newTurn(this.currentPlayer) == 0) // IF NO PLAYABLE SPACES: 
 		{
 			incrementSkippedTurns();
+
 		}
 		else
 		{
 			// RESET SKIPPED TURNS to ZERO
 			resetSkippedTurns();
 			
-
+			this.visualBoard.getBoardData(this.board);
+			this.visualBoard.printBoard();
 
 			// PLAYER INPUT
 			while (!enterSpace()) {}
@@ -89,15 +92,13 @@ public class TurnManager {
 	
 	private boolean enterSpace()
 	{
-		Scanner input = new Scanner(System.in);
+		System.out.println("ENTER NEW SPACE");
 		System.out.println("Player " + this.currentPlayer.getUsername() + "'s Turn");
-		
+
 		// PLAYER CHOOSES SPACE
-		System.out.print("Enter Y: ");
-		int y = input.nextInt();
-		System.out.print("Enter X: ");
-		int x = input.nextInt();
-		input.close();	
+		int y = enterNumber("Y");
+		int x = enterNumber("X");
+		
 		try {
 			this.board.setNewDisk(y, x, this.currentPlayer, this.currentTurn);
 			return true;
@@ -105,6 +106,13 @@ public class TurnManager {
 			System.out.println(e);
 			return false;
 		}
+	}
+	
+	private int enterNumber(String value)
+	{
+		System.out.print("Enter new " + value + " value: ");
+		int valueInputted = Integer.parseInt(this.input.nextLine());
+		return valueInputted;
 	}
 	
 	// OPTIONAL METHOD: TODO

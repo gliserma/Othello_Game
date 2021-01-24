@@ -13,6 +13,7 @@ import othello.players.Player;
 
 public class Space 
 {
+	private String name;
 	private Neighbors neighbors;
 	private ArrayList<Row> rowsEndingHere = new ArrayList<>();
 	private ArrayList<Row> rowsStartingHere = new ArrayList<>();
@@ -133,4 +134,12 @@ public class Space
 	}
 	
 	public Disk getDisk() {return this.disk;}
+	
+	public void setName(String name) {this.name = name;}
+	
+	@Override
+	public String toString()
+	{
+		return this.name;
+	}
 }

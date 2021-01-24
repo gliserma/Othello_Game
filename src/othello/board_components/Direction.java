@@ -33,14 +33,13 @@ public class Direction {
 		{
 			throw new Exception("Invalid direction (x and y must be between -1 and 1)");
 		}
-
 		// CHECK VALUE is NOT (0, 0)
-		if (x != 0 && y != 0)
+		if (x == 0 && y == 0)
 		{
-			setX(x);
-			setY(y);
+			throw new Exception("0, 0 is not a valid direction");
 		}
-		else throw new Exception("0, 0 is not a valid direction");
+		setX(x);
+		setY(y);
 	}
 	
 	/**
@@ -66,5 +65,9 @@ public class Direction {
 	// Getters
 	public int getX() {return this.x;}
 	public int getY() {return this.y;}
+	
+	@Override
+	public String toString() {return "(" + this.x + ", " + this.y + ")";}
+	
 
 }
