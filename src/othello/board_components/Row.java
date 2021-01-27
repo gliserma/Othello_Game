@@ -2,7 +2,6 @@ package othello.board_components;
 
 import java.util.ArrayList;
 
-import othello.players.Player;
 
 /**
  * List of adjacent spaces in a single direction.

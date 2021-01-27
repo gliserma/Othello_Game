@@ -108,15 +108,12 @@ public class Space
 	
 	public void addRowEndingHere(Row terminus) {this.rowsEndingHere.add(terminus);}
 	public void setPlayableTrue() {this.playable = true;}
+	public void setName(String name) {this.name = name;}
 	
 	public void setDisk(Player player, int turn) throws Exception
 	{
-		if (playable && isEmpty())
-		{
-			this.disk = new Disk(player, turn);
-			flipDisks();
-		}
-		else throw new Exception("This space is not playable");
+		this.disk = new Disk(player, turn);
+		flipDisks();
 	}
 	
 	// GETTERS
@@ -134,8 +131,7 @@ public class Space
 	}
 	
 	public Disk getDisk() {return this.disk;}
-	
-	public void setName(String name) {this.name = name;}
+
 	
 	@Override
 	public String toString()

@@ -5,13 +5,14 @@ import othello.players.Player;
 
 public class Execute {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		{
 			TurnManager game = new TurnManager("PlayerOne", "PlayerTwo");
 			while (!game.isGameDone())
 			{
 				System.out.println("Take turn");
-				game.takeTurn();
+				//game.takeTurn();
 			}
 			try {
 				Player winner = game.getWinner();

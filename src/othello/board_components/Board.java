@@ -95,11 +95,10 @@ public class Board {
 	 * 
 	 * @param currentPlayer
 	 */
-	public int newTurn(Player currentPlayer)
+	public void newTurn(Player currentPlayer)
 	{
 		resetPlayableSpaces();
 		findPlayableSpaces(currentPlayer);
-		return this.numCurrentPlayableSpaces;
 	}
 	
 	private void resetPlayableSpaces()
@@ -153,6 +152,9 @@ public class Board {
 	
 
 	// GETTERS
+	public int getPlayableSpaces() {return this.numCurrentPlayableSpaces;}
 	public Space getSpace(int y, int x) {return this.boardspaces[y][x];}
+	public int getBoardHeight() {return this.height;}
+	public int getBoardWidth() {return this.width;}
 	
 }
