@@ -2,8 +2,8 @@ package othello.board_components;
 
 
 /**
- * Contains information to move from one space to a
- * neighboring space.
+ * Represents the information to move from one space to a
+ * specific adjacent neighboring space.
  * 
  * @author nicholasgliserman
  *
@@ -23,8 +23,8 @@ public class Direction {
 	 * a space to the top left while (0, 1) would represent a 
 	 * space directly beneath.
 	 * 
-	 * @param x
-	 * @param y
+	 * @param x  represents the horizontal vector of the direction (-1 being to the left, 1 being to the right)
+	 * @param y  represents the vertical vector of the direction (-1 being up, 1 being down)
 	 */
 	public Direction(int x, int y) throws Exception
 	{
@@ -46,8 +46,8 @@ public class Direction {
 	 * Determine if an input direction is the same
 	 * as this direction object.
 	 * 
-	 * @param comparison
-	 * @return
+	 * @param comparison  the direction to which this one is to be compared
+	 * @return boolean  returns true if the directions are the same, false if they are different
 	 */
 	public boolean isSame(Direction comparison)
 	{
@@ -59,8 +59,8 @@ public class Direction {
 	}
 	
 	// Setters
-	public void setX(int x) {this.x = x;}
-	public void setY(int y) {this.y = y;}
+	private void setX(int x) {this.x = x;}
+	private void setY(int y) {this.y = y;}
 	
 	// Getters
 	public int getX() {return this.x;}

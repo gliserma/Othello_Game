@@ -3,7 +3,12 @@ package othello.board_components;
 import othello.players.Player;
 
 /**
- * Piece placed on the Othello board, representing a player.
+ * Represents a piece placed on the Othello board.
+ * 
+ * Each disk belongs to a particular player, with the
+ * final distribution of disks at the end of the game
+ * determining the winner of the game. As the game is
+ * played, the disks can be flipped.
  * 
  * @author nicholasgliserman
  */
@@ -18,8 +23,8 @@ public class Disk {
 	 * initial state and a turn to record
 	 * when in the game the disk was created.
 	 * 
-	 * @param player
-	 * @param turn
+	 * @param  player	the player who has placed the disk
+	 * @param  turn		the turn number in which the disk was placed
 	 */
 	public Disk(Player player, int turn)
 	{

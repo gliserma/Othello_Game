@@ -3,8 +3,8 @@ package othello.board_components;
 import java.util.ArrayList;
 
 /**
- * The eight possible directions to move from
- * one space to all possible neighboring spaces.
+ * Contains a collection of the eight possible directions to move from
+ * one space to all possible neighboring spaces in the game of Othello.
  * 
  * @author nicholasgliserman
  *
@@ -12,7 +12,8 @@ import java.util.ArrayList;
 public class Directions {
 
 	/**
-	 * Contains all eight directions to move between spaces in the game of Othello.
+	 * Contains all eight cardinal and intermediate directions 
+	 * to move between spaces on the Othello board.
 	 * 
 	 * @author nicholasgliserman
 	 *
@@ -21,15 +22,12 @@ public class Directions {
 	
 	
 	/**
-	 * Instantiates all eight possible directions.
+	 * Instantiates all eight possible directions, i.e.:
 	 * 
-	 * [-1, -1][0, -1][1, -1]
-	 * [-1,  0][  x  ][1,  0]
-	 * [-1,  1][0,  1][1,  1]
+	 * [-1,-1][0,-1][1,-1]
+	 * [-1, 0]      [1, 0]
+	 * [-1, 1][0, 1][1, 1]
 	 * 
-	 * [1] [2] [3]
-	 * [4] [ ] [5]
-	 * [6] [7] [8]
 	 * 
 	 * @author nicholasgliserman
 	 *

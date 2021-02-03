@@ -2,7 +2,6 @@ package othello.board_components;
 
 import java.util.ArrayList;
 
-
 /**
  * List of adjacent spaces in a single direction.
  * 
@@ -38,12 +37,37 @@ public class Row {
 	ArrayList<Space> between = new ArrayList<>();
 	Space end;
 
+	/**
+	 * Constructs a row object that begins at an origin space
+	 * and travels in a constant direction.
+	 * 
+	 * @param  start      the space where the row begins
+	 * @param  direction  the constant direction the row travels while constructing itself
+	 */
 	public Row(Space start, Direction direction)
 	{
 		setStart(start);
 		setDirection(direction);
 	}
 	
+	/**
+	 * Rebuilds the row object in a new turn.
+	 * 
+	 * In a given turn, if the space has a disk of the color matching
+	 * the current player, the row will rebuild itself from the origin space.
+	 * Travelling neighbor by neighbor in a constant direction, the row
+	 * class will add spaces to the "between" array if they contain disks
+	 * of the color opposite to the starting space. If any of these disks is the
+	 * same color or the very first neighboring space is empty, this process
+	 * will stop as their is no playable space at the end of the row. If, however,
+	 * the row ultimately finds an empty space where a new disk could be placed,
+	 * the row will attach itself to this terminal space -- so that the space
+	 * knows it is playable in that turn and, if it is played, which disks
+	 * to flip.
+	 * 
+	 * 
+	 * @param startingDiskBlack		boolean value indicating the color of the first disk in the row
+	 */
 	public void reconstruct(boolean startingDiskBlack)
 	{
 		try 
@@ -90,6 +114,13 @@ public class Row {
 		catch (Exception e) {} // CASES WHERE WE HIT THE EDGE OF THE BOARD
 	}
 	
+	/**
+	 * Switches the color of all the disks in the "between" ArrayList.
+	 * 
+	 * This method is activated by the space where this row terminates 
+	 * if a player places a disk in that space.
+	 * 
+	 */
 	public void flipDisks()
 	{
 		for (int i = 0; i < between.size(); i++)
@@ -103,9 +134,12 @@ public class Row {
 	 * Restores the row to its original settings.
 	 * 
 	 * The row keeps its original starting space and
-	 * direction. 
+	 * direction while dropping the collection of between
+	 * spaces as well as the terminal space. This allows
+	 * the row to reconstruct itself in future turns to
+	 * discover playable spaces with a new configuration
+	 * of disks on the board. 
 	 * 
-	 * TODO: FINISH WRITING DESCRIPTION
 	 */
 	public void reset()
 	{

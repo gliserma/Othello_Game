@@ -5,8 +5,16 @@ import java.util.ArrayList;
 import othello.players.Player;
 
 /**
- * The 8x8 grid of spaces where the game of 
- * Othello is played
+ * Manages the spaces throughout the Othello game.
+ * 
+ * When the board is initialized as an 8x8 grid
+ * (i.e. 2d array) of spaces, it creates
+ * the graph structure to connect neighboring
+ * spaces. During the game, it iterates through
+ * the spaces to find the ones are playable in
+ * a given player's turn. When a player chooses
+ * a space to place a disk, the board passes that
+ * information to the space.
  * 
  * @author nicholasgliserman
  *
@@ -18,12 +26,26 @@ public class Board {
 	private int width = 8;
 	public Space[][] boardspaces = new Space[this.height][this.width];
 
+	/**
+	 * Constructs a new Board object by calling the
+	 * initializeBoard method, which handles the core logic.
+	 * 
+	 * @param black   the player whose disk color is black and goes first
+	 * 
+	 */
 	public Board(Player black)
 	{
 		initializeBoard(black);
 	}
 	
-	private void initializeBoard(Player black)
+	/**
+	 * Sets the board to its beginning state with two disks
+	 * of each color in the center of the board.
+	 * 
+	 * 
+	 * @param black   the player whose disk color is black and goes first
+	 */
+	public void initializeBoard(Player black)
 	{
 		initializeSpaces();
 		// ADD CENTER DISKS to BOARD
@@ -54,7 +76,6 @@ public class Board {
 			for (int x = 0; x < this.width; x++)
 			{
 				boardspaces[y][x] = new Space();
-				boardspaces[y][x].setName("Space @ (" + x + ", " + y + ")");
 			}
 		}
 		
@@ -92,8 +113,10 @@ public class Board {
 	}
 	
 	/**
+	 * Determines the playable spaces at the start
+	 * of a turn for the current player.
 	 * 
-	 * @param currentPlayer
+	 * @param currentPlayer   the player whose turn it currently is
 	 */
 	public void newTurn(Player currentPlayer)
 	{
@@ -139,9 +162,10 @@ public class Board {
 	
 	// SETTERS
 	/**
+	 * Places a new disk on the board in the appropriate space.
 	 * 
-	 * @param x
-	 * @param y
+	 * @param x  the horizontal coordinate of the space on the board where the disk is to be placed
+	 * @param y  the vertical coordinate of the space on the board where the disk is to be placed
 	 * @throws Exception 
 	 */
 	public void setNewDisk(int y, int x, Player currentPlayer, int turn) throws Exception
